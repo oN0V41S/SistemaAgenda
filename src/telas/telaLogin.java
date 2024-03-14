@@ -14,13 +14,37 @@ public class telaLogin extends javax.swing.JFrame {
         initComponents();
         
         // Executando módulo de conexão
-        conexao = ModuloConexao.conector();
+         try{
+            conexao = ModuloConexao.conector();
+         }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados!!");
+         }
+    }
+    
+    public void login(){
+        String sql = "SELECT * FROM tblusuarios WHERE email=? AND senha=?";
         
-        // Verificando Status da Conexão
-        if( conexao != null ) {
-            lblStatus.setIcon(new ImageIcon(getClass().getResource("/icones/KnonValidGreen.png")));
-        }else{
-            lblStatus.setIcon(new ImageIcon(getClass().getResource("/iconesKnobCancel.png")));
+        try{
+            // Preparando a consulta com os dados inseridos pelo usuário
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,txtEmail.getText());
+            pst.setString(2,txtPassword.getText());
+            
+            // Executando query
+            rs = pst.executeQuery();
+            
+            // Se Existir Usuário e senha correspondente
+            if(rs.next()){
+                telaPrincipal principal = new telaPrincipal();
+                this.setVisible(false);
+                principal.setVisible(true);
+                // Fechando Conexão com Banco
+                conexao.close();
+            }else{
+                JOptionPane.showMessageDialog(null, "Email ou Senha Inválidos!!");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
@@ -35,7 +59,6 @@ public class telaLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        lblStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -57,37 +80,32 @@ public class telaLogin extends javax.swing.JFrame {
             }
         });
 
-        lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/KnobCancel.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(141, 141, 141)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(103, 103, 103)
-                            .addComponent(jLabel2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(80, 80, 80)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtEmail)
-                                .addComponent(txtPassword))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jButton1))
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(lblStatus)))
+                        .addGap(103, 103, 103)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmail)
+                            .addComponent(txtPassword))))
                 .addContainerGap(115, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,9 +124,7 @@ public class telaLogin extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(lblStatus)
-                .addContainerGap())
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,11 +133,9 @@ public class telaLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        login();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -160,7 +174,6 @@ public class telaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblStatus;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables

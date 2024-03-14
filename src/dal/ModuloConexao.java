@@ -1,5 +1,6 @@
 package dal;
 import java.sql.*;
+import javax.swing.*;
 
 public class ModuloConexao {
     public static Connection conector(){
@@ -19,6 +20,7 @@ public class ModuloConexao {
             conexao = DriverManager.getConnection(url, user, password);
             return conexao;
         }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
