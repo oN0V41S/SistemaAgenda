@@ -1,14 +1,12 @@
 package telas.contato;
 import java.sql.*;
 import dal.ModuloConexao;
-import javax.swing.JOptionPane;
-import telas.telaSobre;
-import telas.telaSobre;
+import javax.swing.*;
+import contato.*;
 
 public class telaInserir extends javax.swing.JFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
 
     public telaInserir() {
         initComponents();
@@ -263,61 +261,8 @@ public class telaInserir extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // Limpa todos campos do contato
-    public void limparCampos(){
-        // Limpa os dados inseridos pelo usuário
-        txtNome.setText(null);
-        txtDDD.setText(null);
-        txtNumero.setText(null);
-        txtEmail.setText(null);
-        txtMesNascimento.setText(null);
-        txtCPF.setText(null);
-        txtEndereco.setText(null);
-        txtCidade.setText(null);
-        txtEstado.setText(null);
-    }
-    
-    // Retorna verdadeiro se os campos de texto Estão vazios ou sem um espaço vazio.
-    public boolean validarCamposSemId(){
-        if( txtNome.getText().length() == 0 || txtNome.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o nome do contato!!");
-            return false;
-        }else if(txtDDD.getText().length() == 0 || txtDDD.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o DDD do contato!!");
-            return false;
-        }else if(txtNumero.getText().length() == 0 || txtNumero.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o Número do contato!!");
-            return false;
-        }else if(txtEmail.getText().length() == 0 || txtEmail.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o Email do contato!!");
-            return false;
-        }else if(txtMesNascimento.getText().length() == 0 || txtMesNascimento.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o Mês de Nascimento do contato!!");
-            return false;
-        }else if(txtCPF.getText().length() == 0 || txtCPF.getText().equals(" ")) {
-            JOptionPane.showMessageDialog(null,"Insira o CPF do contato!!");
-            return false;
-        }else if(txtEndereco.getText().length() == 0 || txtEndereco.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o Endereço do contato!!");
-            return false;
-        }else if(txtCidade.getText().length() == 0 || txtCidade.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira a Cidade do contato!!");
-            return false;
-        }else if(txtEstado.getText().length() == 0 || txtEstado.getText().equals(" ")){
-            JOptionPane.showMessageDialog(null,"Insira o Estado do contato!!");
-            return false;
-        }else{
-            return true;
-        }
-    }
-    
     // Método para inserir usuários no banco
     public void inserir(){
-        // Validando campos sem o ID
-        if(validarCamposSemId()){}else{
-            return;
-        }
-        
         // Instrução SQL
         String sql = "INSERT INTO tblcontatos (nome,ddd,celular,email,mesNascimento,cpf,endereco,cidade,estado) VALUES (?,?,?,?,?,?,?,?,?)";
         
@@ -344,7 +289,7 @@ public class telaInserir extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Usuário Cadastrado!!");
                 
                 // Limpa os dados inseridos pelo usuário
-                limparCampos();
+                utils.limparCampos();
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
@@ -435,14 +380,14 @@ public class telaInserir extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem opcaoSair;
-    private javax.swing.JTextField txtCPF;
-    private javax.swing.JTextField txtCidade;
-    private javax.swing.JTextField txtDDD;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtEstado;
-    private javax.swing.JTextField txtMesNascimento;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNumero;
+    public static javax.swing.JTextField txtCPF;
+    public static javax.swing.JTextField txtCidade;
+    public static javax.swing.JTextField txtDDD;
+    public static javax.swing.JTextField txtEmail;
+    public static javax.swing.JTextField txtEndereco;
+    public static javax.swing.JTextField txtEstado;
+    public static javax.swing.JTextField txtMesNascimento;
+    public static javax.swing.JTextField txtNome;
+    public static javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 }

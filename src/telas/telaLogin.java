@@ -3,6 +3,7 @@ package telas;
 import java.sql.*;
 import dal.*;
 import javax.swing.*;
+import telas.telaPrincipal;
 
 public class telaLogin extends javax.swing.JFrame {
     // Conexão com Banco de Dados
@@ -38,6 +39,7 @@ public class telaLogin extends javax.swing.JFrame {
                 telaPrincipal principal = new telaPrincipal();
                 this.setVisible(false);
                 principal.setVisible(true);
+
                 // Fechando Conexão com Banco
                 conexao.close();
             }else{

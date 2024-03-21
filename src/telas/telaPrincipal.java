@@ -1,8 +1,5 @@
 package telas;
-import telas.contato.telaVisualizar;
-import telas.contato.telaEditar;
-import telas.contato.telaDeletar;
-import telas.contato.telaInserir;
+import telas.contato.*;
 import javax.swing.JOptionPane;
 
 public class telaPrincipal extends javax.swing.JFrame {
